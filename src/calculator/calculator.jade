@@ -82,25 +82,25 @@ table(border="0" style="width:80%"): tbody
       | $t$
       br
       | (t-Wert)
-    td(ng-bind="$ctrl.stats.t.toFixed(8)")
+    td(ng-bind="$ctrl.stats.t.toFixed(3)")
   tr
     td
       | $\mathit{df}$
       br
       | (Freiheitsgrade)
-    td(ng-bind="$ctrl.stats.df.toFixed(0)")
+    td(ng-bind="$ctrl.stats.df.toFixed()")
   tr(ng-if="$ctrl.selected === 'twoSample'" math-jax)
     td
       | $s_\mathrm{p}$
       br
       | (Standardabweichung, gepoolt)
-    td(ng-bind="$ctrl.stats.sp.toFixed(8)")
+    td(ng-bind="$ctrl.stats.sp.toFixed(3)")
   tr
     td
       | $P$
       br
       | (Wahrscheinlichkeit)
-    td(ng-bind="$ctrl.stats.p.toFixed(12)")
+    td(ng-bind="$ctrl.stats.p.toFixed(3)")
 h3 Kritische t-Werte (t-Quantile)
 table(border="0" style="width:100%"): tbody
   tr
@@ -108,10 +108,10 @@ table(border="0" style="width:100%"): tbody
   tr
     td(ng-repeat="t in $ctrl.twoSided" ng-bind="t" style="width: 11%;")
   tr
-    td(ng-repeat="c in $ctrl.stats.twoSided" ng-bind="c.toFixed(8)")
+    td(ng-repeat="c in $ctrl.stats.twoSided" ng-bind="c.toFixed(3)")
   tr
     th(colspan="9") P-Wert für einseitigen Vertrauensbereich
   tr
     td(ng-repeat="t in $ctrl.oneSided" ng-bind="t")
   tr
-    td(ng-repeat="c in $ctrl.stats.oneSided" ng-bind="c.toFixed(8)")
+    td(ng-repeat="c in $ctrl.stats.oneSided" ng-bind="c.toFixed(3)")
