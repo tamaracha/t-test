@@ -9,7 +9,7 @@
     "build:jade": "jade src/index.jade -o dist",
     "build:js": "NODE_ENV=production webpack -p",
     "build": "npm run build:js && npm run build:jade",
-    "preversion": "npm test && npm run build && git add ./dist ./coverage",
+    "preversion": "npm test && npm run build && git add ./dist",
     "postversion": "git push && git push --tags"
   },
   "author": "Tamara Cook <tamara.cook@icloud.com>",
