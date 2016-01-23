@@ -1,0 +1,117 @@
+form.row.form-horizontal(name="$ctrl.form" novalidate ng-switch="$ctrl.selected")
+  fieldset.col-xs-6(ng-switch-default math-jax)
+    legend Gruppe 1
+    .form-group
+      label.col-xs-6.control-label(for="mean1") $\overline{X}_1$
+      .col-xs-6
+        input.form-control#mean1(type="text" name="mean1" ng-model="$ctrl.data.m1" big title="Mittelwert der ersten Gruppe")
+    .form-group
+      label.col-xs-6.control-label(for="n1") $n_1$
+      .col-xs-6
+        input.form-control#n1(type="text" name="n1" ng-model="$ctrl.data.n1" big title="Umfang der ersten Gruppe")
+    .form-group
+      label.col-xs-6.control-label(for="s1") $s_1$
+      .col-xs-6
+        input.form-control#s1(type="text" name="s1" ng-model="$ctrl.data.s1" big title="Standardabweichung der ersten Gruppe")
+  fieldset.col-xs-6(ng-switch-default math-jax)
+    legend Gruppe 2
+    .form-group
+      label.col-xs-6.control-label(for="m2") $\overline{X}_2$
+      .col-xs-6
+        input.form-control#m2(type="text" name="m2" ng-model="$ctrl.data.m2" big title="Mittelwert der zweiten Gruppe")
+    .form-group
+      label.col-xs-6.control-label(for="n2") $n_2$
+      .col-xs-6
+        input.form-control#n2(type="text" name="n2" ng-model="$ctrl.data.n2" big title="Umfang der zweiten Gruppe")
+    .form-group
+      label.col-xs-6.control-label(for="s2") $s_2$
+      .col-xs-6
+        input.form-control#s2(type="text" name="s2" ng-model="$ctrl.data.s2" big title="Standardabweichung der zweiten Gruppe")
+  fieldset.col-xs-6(ng-switch-when="oneSample" math-jax)
+    legend Stichprobe
+    .form-group
+      label.col-xs-6.control-label(for="m") $\overline{X}$
+      .col-xs-6
+        input.form-control#m(type="text" name="m" ng-model="$ctrl.data.m" big title="Mittelwert der Gruppe")
+    .form-group
+      label.col-xs-6.control-label(for="n") $n$
+      .col-xs-6
+        input.form-control#n(type="text" name="n" ng-model="$ctrl.data.n" big title="Umfang der Stichprobe")
+    .form-group
+      label.col-xs-6.control-label(for="s") $s$
+      .col-xs-6
+        input.form-control#s(type="text" name="s" ng-model="$ctrl.data.s" big title="Standardabweichung der Stichprobe")
+    .form-group
+      label.col-xs-6.control-label(for="mu") $\mu_0$
+      .col-xs-6
+        input.form-control#mu(type="text" name="mu" ng-model="$ctrl.data.mu" big title="Mittelwert der Vergleichspopulation")
+  fieldset.col-xs-6(ng-switch-when="paired" math-jax)
+    legend Gepaarte Stichprobe
+    .form-group
+      label.col-xs-6.control-label(for="m") $\overline{X}_D$
+      .col-xs-6
+        input.form-control#m(type="text" name="m" ng-model="$ctrl.data.m" big title="Mittlere Differenz der beiden Stichproben")
+    .form-group
+      label.col-xs-6.control-label(for="n") $n$
+      .col-xs-6
+        input.form-control#n(type="text" name="n" ng-model="$ctrl.data.n" big title="Umfang der Stichproben")
+    .form-group
+      label.col-xs-6.control-label(for="s") $s_D$
+      .col-xs-6
+        input.form-group#s(type="text" name="s" ng-model="$ctrl.data.s" big)
+    .form-group
+      label.col-xs-6.control-label(for="mu") $\mu_0$
+      .col-xs-6
+        input.form-control#mu(type="text" name="mu" ng-model="$ctrl.data.mu" big title="Mittelwert der Vergleichspopulation")
+.row: .col-xs-12
+  ul.nav.nav-tabs
+    li(ng-class="{'active': $ctrl.selected === 'twoSample'}"): a(href="#" ng-click="$ctrl.select('twoSample')") ungepaarter t-Test
+    li(ng-class="{'active': $ctrl.selected === 'paired'}"): a(href="#" ng-click="$ctrl.select('paired')") gepaarter t-Test
+    li(ng-class="{'active': $ctrl.selected === 'welch'}"): a(href="#" ng-click="$ctrl.select('welch')") Welch-Test
+    li(ng-class="{'active': $ctrl.selected === 'oneSample'}"): a(href="#" ng-click="$ctrl.select('oneSample')") Einstichproben t-Test
+.row: .col-xs-12(ng-switch="$ctrl.selected")
+  p(math-jax ng-switch-when="twoSample") $$ {\Large {t}} \;=\; \displaystyle\frac{\overline{X}_1-\overline{X}_2}{s_p \cdot \sqrt{\displaystyle\frac{1}{n_1}+\frac{1}{n_2}}},\quad s_p = \sqrt\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2} $$
+  p(math-jax ng-switch-when="paired") $$ t = \frac{\overline{X}_D - \mu_0}{ \displaystyle\frac{s_D}{\sqrt{n}}},\qquad \overline{X}_D = \frac{1}{n}\cdot \sum \left ( X_1-X_2 \right ),\qquad s_D = \sqrt{ \frac{ \sum \big((X_1-X_2)-\overline{X}_D\big)^2 }{n-1} } $$
+  p(math-jax ng-switch-when="welch") $$ {\Large {t}} \;=\; \displaystyle\frac{\overline{X}_1-\overline{X}_2}{\sqrt{\displaystyle\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}, \qquad \mathrm{df}_\mathrm{unpooled} = \frac{\left ( \displaystyle\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2} \right )^2}{\displaystyle\frac{\displaystyle\left (\frac{s_1^2}{n_1}  \right )^2}{n_1-1}+\displaystyle\frac{\displaystyle\left (\frac{s_2^2}{n_2}  \right )^2}{n_2-1}} $$
+  p(math-jax ng-switch-when="oneSample") $$ t=\frac{\bar{X}-\mu_0}{ \displaystyle\frac{s}{\sqrt{n}} } $$
+  hr
+h3 Berechnungsergebnis (t-Statistik)
+table(border="0" style="width:80%"): tbody
+  tr
+    td
+      | $t$
+      br
+      | (t-Wert)
+    td(ng-bind="$ctrl.stats.t.toFixed()")
+  tr
+    td
+      | $\mathit{df}$
+      br
+      | (Freiheitsgrade)
+    td(ng-bind="$ctrl.stats.df.toFixed()")
+  tr(ng-if="$ctrl.selected === 'twoSample'" math-jax)
+    td
+      | $s_\mathrm{p}$
+      br
+      | (Standardabweichung, gepoolt)
+    td(ng-bind="$ctrl.stats.sp.toFixed()")
+  tr
+    td
+      | $P$
+      br
+      | (Wahrscheinlichkeit)
+    td(ng-bind="$ctrl.stats.p.toFixed()")
+h3 Kritische t-Werte (t-Quantile)
+table(border="0" style="width:100%"): tbody
+  tr
+    th(colspan="9") P-Wert für zweiseitigen Vertrauensbereich
+  tr
+    td(ng-repeat="t in $ctrl.twoSided" ng-bind="t" style="width: 11%;")
+  tr
+    td(ng-repeat="c in $ctrl.stats.twoSided" ng-bind="c.toFixed()")
+  tr
+    th(colspan="9") P-Wert für einseitigen Vertrauensbereich
+  tr
+    td(ng-repeat="t in $ctrl.oneSided" ng-bind="t")
+  tr
+    td(ng-repeat="c in $ctrl.stats.oneSided" ng-bind="c.toFixed()")
