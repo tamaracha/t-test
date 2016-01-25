@@ -2,67 +2,67 @@ form.row.form-horizontal(name="$ctrl.form" novalidate ng-switch="$ctrl.selected"
   fieldset.col-xs-6(ng-switch-default math-jax)
     legend Gruppe 1
     .form-group
-      label.col-xs-6.control-label(for="mean1") $\overline{X}_1$
+      label.col-xs-6.control-label(for="m1") $\overline{X}_1$
       .col-xs-6
-        input.form-control#mean1(type="number" name="mean1" ng-model="$ctrl.data.m1" big title="Mittelwert der ersten Gruppe")
+        input.form-control#m1(type="number" required name="m1" ng-model="$ctrl.data.m1" title="Mittelwert der ersten Gruppe")
     .form-group
       label.col-xs-6.control-label(for="n1") $n_1$
       .col-xs-6
-        input.form-control#n1(type="number" name="n1" ng-model="$ctrl.data.n1" big title="Umfang der ersten Gruppe")
+        input.form-control#n1(type="number" required name="n1" ng-model="$ctrl.data.n1" min="1" title="Umfang der ersten Gruppe")
     .form-group
       label.col-xs-6.control-label(for="s1") $s_1$
       .col-xs-6
-        input.form-control#s1(type="number" name="s1" ng-model="$ctrl.data.s1" big title="Standardabweichung der ersten Gruppe")
+        input.form-control#s1(type="number" required name="s1" ng-model="$ctrl.data.s1" min="0" title="Standardabweichung der ersten Gruppe")
   fieldset.col-xs-6(ng-switch-default math-jax)
     legend Gruppe 2
     .form-group
       label.col-xs-6.control-label(for="m2") $\overline{X}_2$
       .col-xs-6
-        input.form-control#m2(type="number" name="m2" ng-model="$ctrl.data.m2" big title="Mittelwert der zweiten Gruppe")
+        input.form-control#m2(type="number" required name="m2" ng-model="$ctrl.data.m2" title="Mittelwert der zweiten Gruppe")
     .form-group
       label.col-xs-6.control-label(for="n2") $n_2$
       .col-xs-6
-        input.form-control#n2(type="number" name="n2" ng-model="$ctrl.data.n2" big title="Umfang der zweiten Gruppe")
+        input.form-control#n2(type="number" required name="n2" ng-model="$ctrl.data.n2" min="1" title="Umfang der zweiten Gruppe")
     .form-group
       label.col-xs-6.control-label(for="s2") $s_2$
       .col-xs-6
-        input.form-control#s2(type="number" name="s2" ng-model="$ctrl.data.s2" big title="Standardabweichung der zweiten Gruppe")
+        input.form-control#s2(type="number" required name="s2" ng-model="$ctrl.data.s2" min="0" title="Standardabweichung der zweiten Gruppe")
   fieldset.col-xs-6(ng-switch-when="oneSample" math-jax)
     legend Stichprobe
     .form-group
       label.col-xs-6.control-label(for="m") $\overline{X}$
       .col-xs-6
-        input.form-control#m(type="number" name="m" ng-model="$ctrl.data.m" big title="Mittelwert der Gruppe")
+        input.form-control#m(type="number" required name="m" ng-model="$ctrl.data.m" title="Mittelwert der Gruppe")
     .form-group
       label.col-xs-6.control-label(for="n") $n$
       .col-xs-6
-        input.form-control#n(type="number" name="n" ng-model="$ctrl.data.n" big title="Umfang der Stichprobe")
+        input.form-control#n(type="number" required name="n" ng-model="$ctrl.data.n" min="1" title="Umfang der Stichprobe")
     .form-group
       label.col-xs-6.control-label(for="s") $s$
       .col-xs-6
-        input.form-control#s(type="number" name="s" ng-model="$ctrl.data.s" big title="Standardabweichung der Stichprobe")
+        input.form-control#s(type="number" required name="s" ng-model="$ctrl.data.s" min="0" title="Standardabweichung der Stichprobe")
     .form-group
       label.col-xs-6.control-label(for="mu") $\mu_0$
       .col-xs-6
-        input.form-control#mu(type="number" name="mu" ng-model="$ctrl.data.mu" big title="Mittelwert der Vergleichspopulation")
+        input.form-control#mu(type="number" name="mu" ng-model="$ctrl.data.mu" title="Mittelwert der Vergleichspopulation")
   fieldset.col-xs-6(ng-switch-when="paired" math-jax)
     legend Gepaarte Stichprobe
     .form-group
       label.col-xs-6.control-label(for="m") $\overline{X}_D$
       .col-xs-6
-        input.form-control#m(type="number" name="m" ng-model="$ctrl.data.m" big title="Mittlere Differenz der beiden Stichproben")
+        input.form-control#m(type="number" required name="m" ng-model="$ctrl.data.m" title="Mittlere Differenz der beiden Stichproben")
     .form-group
       label.col-xs-6.control-label(for="n") $n$
       .col-xs-6
-        input.form-control#n(type="number" name="n" ng-model="$ctrl.data.n" big title="Umfang der Stichproben")
+        input.form-control#n(type="number" required name="n" ng-model="$ctrl.data.n" min="1" title="Umfang der Stichproben")
     .form-group
       label.col-xs-6.control-label(for="s") $s_D$
       .col-xs-6
-        input.form-control#s(type="number" name="s" ng-model="$ctrl.data.s" big)
+        input.form-control#s(type="number" required name="s" ng-model="$ctrl.data.s" min="0")
     .form-group
       label.col-xs-6.control-label(for="mu") $\mu_0$
       .col-xs-6
-        input.form-control#mu(type="number" name="mu" ng-model="$ctrl.data.mu" big title="Mittelwert der Vergleichspopulation")
+        input.form-control#mu(type="number" name="mu" ng-model="$ctrl.data.mu")
 .row: .col-xs-12
   ul.nav.nav-tabs
     li(ng-class="{'active': $ctrl.selected === 'twoSample'}"): a(href="#" ng-click="$ctrl.select('twoSample')") ungepaarter t-Test
