@@ -15,3 +15,4 @@ export default angular.module('calculator', [
 .directive('mathJax', MathJaxDirective)
 .directive('big', bigParser)
 .name;
+angular.bootstrap(document.body, ['calculator'], {strictDi: true});
