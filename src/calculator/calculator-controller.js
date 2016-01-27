@@ -1,14 +1,13 @@
 export default /*@ngInject*/class CalculatorController{
   constructor($scope, student){
-    this.twoSided = student.twoSided;
-    this.oneSided = student.oneSided;
     this.select('twoSample');
+    this.alternative = 'ne';
+    this.alpha = 0.05;
     $scope.$watch(
       () => {
-        if(this.form.$valid){return this.data;}
+        if(this.form.$valid && this.form.$dirty){return this.data;}
       },
-      (val, oldVal) => {
-        if(val === oldVal){return;}
+      (val) => {
         if(val === undefined){
           this.stats = undefined;
         }

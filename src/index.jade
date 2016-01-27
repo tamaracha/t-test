@@ -11,13 +11,11 @@ html(lang="de")
     script(src="app.js")
     script(type="text/x-mathjax-config").
       MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        showProcessingMessages: false
+        skipStartupTypeset: true,
+        showProcessingMessages: false,
+        messageStyle: 'none'
       });
-    script(src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG")
+      MathJax.Hub.Configured();
+    script(src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG")
   body
     calculator.container

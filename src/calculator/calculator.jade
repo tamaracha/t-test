@@ -1,8 +1,39 @@
-form.row.form-horizontal(name="$ctrl.form" novalidate ng-switch="$ctrl.selected")
+form.row.form-horizontal(novalidate name="$ctrl.form" ng-switch="$ctrl.selected")
+  .form-group
+    label.col-xs-3 Alternativ-Hypothese
+    .col-xs-9
+      label.radio-inline
+        input(type="radio" name="alternative" ng-model="$ctrl.alternative" value="lt")
+        |  gerichtet (links)
+      label.radio-inline
+        input(type="radio" name="alternative" ng-model="$ctrl.alternative" value="ne")
+        |  ungerichtet
+      label.radio-inline
+        input(type="radio" name="alternative" ng-model="$ctrl.alternative" value="gt")
+        |  gerichtet (rechts)
+      .help-block(ng-switch="$ctrl.alternative")
+        p(ng-switch-when="lt") Der wahre Mittelwert von Gruppe 1 ist kleiner als der von Gruppe 2 (Differenz <span latex="\overline{X}_D < 0"></span>).
+        p(ng-switch-when="ne") Der wahre Mittelwert von Gruppe 1 ist ungleich dem von Gruppe 2 (Differenz <span latex="\overline{X}_D \neq 0"></span>).
+        p(ng-switch-when="gt") Der wahre Mittelwert von Gruppe 1 ist größer als der von Gruppe 2 (Differenz <span latex="\overline{X}_D > 0"></span>).
+  .form-group
+    label.col-xs-3 Signifikanzniveau (<span latex="\alpha"></span>)
+    .col-xs-9
+      label.radio-inline
+        input(type="radio" name="alpha" ng-model="$ctrl.alpha" ng-value="0.05")
+        |  5%
+      label.radio-inline
+        input(type="radio" name="alpha" ng-model="$ctrl.alpha" ng-value="0.01")
+        |  1%
+      label.radio-inline
+        input(type="radio" name="alpha" ng-model="$ctrl.alpha" ng-value="0.001")
+        |  0.1%
+      .help-block(ng-switch="$ctrl.alternative")
+        div(ng-switch-default latex="p <= {{$ctrl.alpha}}")
+        div(ng-switch-when="ne" latex="p <= {{$ctrl.alpha/2}}")
   fieldset.col-xs-6(ng-switch-default math-jax)
     legend Gruppe 1
     .form-group
-      label.col-xs-6.control-label(for="m1") $\overline{X}_1$
+      label.col-xs-6.control-label(for="m1" latex="\\overline{X}_1")
       .col-xs-6
         input.form-control#m1(type="number" required name="m1" ng-model="$ctrl.data.m1" title="Mittelwert der ersten Gruppe")
     .form-group
@@ -70,48 +101,31 @@ form.row.form-horizontal(name="$ctrl.form" novalidate ng-switch="$ctrl.selected"
     li(ng-class="{'active': $ctrl.selected === 'welch'}"): a(href="#" ng-click="$ctrl.select('welch')") Welch-Test
     li(ng-class="{'active': $ctrl.selected === 'oneSample'}"): a(href="#" ng-click="$ctrl.select('oneSample')") Einstichproben t-Test
 .row: .col-xs-12(ng-switch="$ctrl.selected")
-  p(math-jax ng-switch-when="twoSample") $$ {\Large {t}} \;=\; \displaystyle\frac{\overline{X}_1-\overline{X}_2}{s_p \cdot \sqrt{\displaystyle\frac{1}{n_1}+\frac{1}{n_2}}},\quad s_p = \sqrt\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2} $$
-  p(math-jax ng-switch-when="paired") $$ t = \frac{\overline{X}_D - \mu_0}{ \displaystyle\frac{s_D}{\sqrt{n}}},\qquad \overline{X}_D = \frac{1}{n}\cdot \sum \left ( X_1-X_2 \right ),\qquad s_D = \sqrt{ \frac{ \sum \big((X_1-X_2)-\overline{X}_D\big)^2 }{n-1} } $$
-  p(math-jax ng-switch-when="welch") $$ {\Large {t}} \;=\; \displaystyle\frac{\overline{X}_1-\overline{X}_2}{\sqrt{\displaystyle\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}, \qquad \mathrm{df}_\mathrm{unpooled} = \frac{\left ( \displaystyle\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2} \right )^2}{\displaystyle\frac{\displaystyle\left (\frac{s_1^2}{n_1}  \right )^2}{n_1-1}+\displaystyle\frac{\displaystyle\left (\frac{s_2^2}{n_2}  \right )^2}{n_2-1}} $$
-  p(math-jax ng-switch-when="oneSample") $$ t=\frac{\bar{X}-\mu_0}{ \displaystyle\frac{s}{\sqrt{n}} } $$
+  div(ng-switch-when="twoSample" latex="{\\Large {t}} \\;=\\; \\displaystyle\\frac{\\overline{X}_1-\\overline{X}_2}{s_p \\cdot \\sqrt{\\displaystyle\\frac{1}{n_1}+\\frac{1}{n_2}}},\\quad s_p = \\sqrt\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}")
+  div(ng-switch-when="paired" latex="t = \\frac{\\overline{X}_D - \\mu_0}{ \\displaystyle\\frac{s_D}{\\sqrt{n}}},\\qquad \\overline{X}_\D = \\frac{1}{n}\\cdot \\sum \\left ( X_1-X_2 \\right ),\\qquad s_D = \\sqrt{ \\frac{ \\sum \\big((X_1-X_2)-\\overline{X}_D\\big)^2 }{n-1} }")
+  div(ng-switch-when="welch" latex="{\\Large {t}} \\;=\\; \\displaystyle\\frac{\\overline{X}_1-\\overline{X}_2}{\\sqrt{\\displaystyle\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2}}}, \\qquad \\mathrm{df}_\\mathrm{unpooled} = \\frac{\\left ( \\displaystyle\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2} \\right )^2}{\\displaystyle\\frac{\\displaystyle\\left (\\frac{s_1^2}{n_1}  \\right )^2}{n_1-1}+\\displaystyle\\frac{\\displaystyle\\left (\\frac{s_2^2}{n_2}  \\right )^2}{n_2-1}}")
+  div(ng-switch-when="oneSample" latex="t=\\frac{\\bar{X}-\\mu_0}{ \\displaystyle\\frac{s}{\\sqrt{n}} }")
   hr
 h3 Berechnungsergebnis (t-Statistik)
-table(border="0" style="width:80%"): tbody
-  tr
-    td
-      | $t$
-      br
-      | (t-Wert)
-    td(ng-bind="$ctrl.stats.t.toFixed(3)")
-  tr
-    td
-      | $\mathit{df}$
-      br
-      | (Freiheitsgrade)
-    td(ng-bind="$ctrl.stats.df.toFixed()")
-  tr(ng-if="$ctrl.selected === 'twoSample'" math-jax)
-    td
-      | $s_\mathrm{p}$
-      br
-      | (Standardabweichung, gepoolt)
-    td(ng-bind="$ctrl.stats.sp.toFixed(3)")
-  tr
-    td
-      | $P$
-      br
-      | (Wahrscheinlichkeit)
-    td(ng-bind="$ctrl.stats.p.toFixed(3)")
-h3 Kritische t-Werte (t-Quantile)
-table(border="0" style="width:100%"): tbody
-  tr
-    th(colspan="9") P-Wert für zweiseitigen Vertrauensbereich
-  tr
-    td(ng-repeat="t in $ctrl.twoSided" ng-bind="t" style="width: 11%;")
-  tr
-    td(ng-repeat="c in $ctrl.stats.twoSided" ng-bind="c.toFixed(3)")
-  tr
-    th(colspan="9") P-Wert für einseitigen Vertrauensbereich
-  tr
-    td(ng-repeat="t in $ctrl.oneSided" ng-bind="t")
-  tr
-    td(ng-repeat="c in $ctrl.stats.oneSided" ng-bind="c.toFixed(3)")
+dl.dl-horizontal
+  dt
+    span(latex="t")
+    br
+    | (t-Wert)
+  dd(ng-bind="$ctrl.stats.t.toFixed(3)")
+  dt
+    span(latex="\\mathit{df}")
+    br
+    | (Freiheitsgrade)
+  dd(ng-bind="$ctrl.stats.df.toFixed()")
+  dt(ng-if="$ctrl.selected === 'twoSample'" math-jax)
+    span(latex="s_\\mathrm{p}")
+    br
+    | (Standardabweichung, gepoolt)
+  dd(ng-if="$ctrl.selected === 'twoSample'" ng-bind="$ctrl.stats.sp.toFixed(3)")
+  dt
+    span(latex="p")
+    br
+    | (Wahrscheinlichkeit)
+  dd(ng-bind="$ctrl.stats.p.toFixed(3)")
+h3 Interpretation
