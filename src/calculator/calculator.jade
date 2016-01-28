@@ -3,29 +3,29 @@ form.row.form-horizontal(novalidate name="$ctrl.form" ng-switch="$ctrl.selected"
     label.col-xs-3 Alternativ-Hypothese
     .col-xs-9
       label.radio-inline
-        input(type="radio" name="alternative" ng-model="$ctrl.alternative" value="lt")
+        input(type="radio" name="alternative" ng-model="$ctrl.data.alternative" value="lt")
         |  gerichtet (links)
       label.radio-inline
-        input(type="radio" name="alternative" ng-model="$ctrl.alternative" value="ne")
+        input(type="radio" name="alternative" ng-model="$ctrl.data.alternative" value="ne")
         |  ungerichtet
       label.radio-inline
-        input(type="radio" name="alternative" ng-model="$ctrl.alternative" value="gt")
+        input(type="radio" name="alternative" ng-model="$ctrl.data.alternative" value="gt")
         |  gerichtet (rechts)
       .help-block(ng-switch="$ctrl.alternative")
-        p(ng-switch-when="lt") Der wahre Mittelwert von Gruppe 1 ist kleiner als der von Gruppe 2 (Differenz <span latex="\overline{X}_D < 0"></span>).
-        p(ng-switch-when="ne") Der wahre Mittelwert von Gruppe 1 ist ungleich dem von Gruppe 2 (Differenz <span latex="\overline{X}_D \neq 0"></span>).
-        p(ng-switch-when="gt") Der wahre Mittelwert von Gruppe 1 ist größer als der von Gruppe 2 (Differenz <span latex="\overline{X}_D > 0"></span>).
+        p(ng-switch-when="lt") Die Differenz der wahren Mittelwerte von Gruppe 1 und zwei ist kleiner als 0.
+        p(ng-switch-when="ne") Die Differenz der wahren Mittelwerte von Gruppe 1 und zwei ist ungleich 0.
+        p(ng-switch-when="gt") Die Differenz der wahren Mittelwerte von Gruppe 1 und zwei ist größer als 0.
   .form-group
     label.col-xs-3 Signifikanzniveau (<span latex="\alpha"></span>)
     .col-xs-9
       label.radio-inline
-        input(type="radio" name="alpha" ng-model="$ctrl.alpha" ng-value="0.05")
+        input(type="radio" name="alpha" ng-model="$ctrl.data.alpha" ng-value="0.05")
         |  5%
       label.radio-inline
-        input(type="radio" name="alpha" ng-model="$ctrl.alpha" ng-value="0.01")
+        input(type="radio" name="alpha" ng-model="$ctrl.data.alpha" ng-value="0.01")
         |  1%
       label.radio-inline
-        input(type="radio" name="alpha" ng-model="$ctrl.alpha" ng-value="0.001")
+        input(type="radio" name="alpha" ng-model="$ctrl.data.alpha" ng-value="0.001")
         |  0.1%
       .help-block(ng-switch="$ctrl.alternative")
         div(ng-switch-default latex="p <= {{$ctrl.alpha}}")
@@ -126,6 +126,12 @@ dl.dl-horizontal
   dt
     span(latex="p")
     br
-    | (Wahrscheinlichkeit)
+    | (Irrtumswahrscheinlichkeit)
   dd(ng-bind="$ctrl.stats.p.toFixed(3)")
+  dt
+    $t_\mathrm{crit}$
+    br
+    |  (kritischer t-Wert)
+  dd(ng-bind="$ctrl.stats.t_crit.toFixed(3)")
 h3 Interpretation
+Es besteht eine Irrtumswahrscheinlichkeit von $p = {{$ctrl.stats.p}}$, fälschlicherweise die Null-Hypothese zu verwerfen und die Alternativhypothese zu akzeptieren.
