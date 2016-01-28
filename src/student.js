@@ -1,8 +1,6 @@
 import angular from 'angular';
 import pick from 'lodash.pick';
 export default /*@ngInject*/function(Big, $window){
-  const twoSided = [0.5, 0.75, 0.8, 0.85, 0.9, 0.95, 0.98, 0.99, 0.998];
-  const oneSided = [0.75, 0.875, 0.9, 0.925, 0.95, 0.975, 0.99, 0.995, 0.999];
   function stats(data, method){
     let stats;
     switch(method){
@@ -20,17 +18,29 @@ export default /*@ngInject*/function(Big, $window){
       break;
     default: return;
     }
-    if(stats.df.cmp(0) === 1) {
-      const dist = new $window.jStat.studentt(parseInt(stats.df));
+    if(stats.df.cmp(0) !== 1){return stats;}
+    const dist = new $window.jStat.studentt(parseInt(stats.df));
+    switch(data.alternative){
+    case 'lt':
       stats.p = new Big(dist.cdf(parseFloat(stats.t)));
-      stats.twoSided = [];
-      angular.forEach(twoSided, function(val){
-        stats.twoSided.push(new Big(dist.inv(val)));
-      });
-      stats.oneSided = [];
-      angular.forEach(oneSided, function(val){
-        stats.oneSided.push(new Big(dist.inv(val)));
-      });
+      stats.t_crit = new Big(dist.inv(data.alpha));
+      break;
+    case 'gt':
+      stats.p = new Big(dist.cdf(1 - parseFloat(stats.t)));
+      stats.t_crit = new Big(dist.inv(data.alpha)).abs();
+      break;
+    case 'ne':
+      stats.t_crit = new Big(dist.inv(data.alpha/2)).abs();
+      if(stats.t.cmp(0) === 1){
+        stats.p = new Big(dist.cdf(1 - parseFloat(stats.t)));
+      }
+      else if(stats.t.cmp(0) === -1){
+        stats.p = new Big(dist.cdf(parseFloat(stats.t)));
+      }
+      else if(stats.t.cmp(0) === 0){
+        stats.p = new Big(0.5);
+      }
+      break;
     }
     return stats;
   }
@@ -94,8 +104,6 @@ export default /*@ngInject*/function(Big, $window){
     twoSample,
     paired,
     welch,
-    oneSample,
-    twoSided,
-    oneSided
+    oneSample
   };
 }
